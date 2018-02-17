@@ -1,15 +1,22 @@
 package mixit.util
 
+import com.google.api.services.gmail.Gmail
+import com.google.api.services.gmail.model.Message
 import com.sendgrid.*
 import mixit.MixitProperties
 import org.springframework.context.annotation.Profile
 import org.springframework.http.MediaType
 import org.springframework.mail.javamail.JavaMailSender
-import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
+import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.util.*
+import javax.mail.Session
+import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeMessage
+
 
 /**
  * Email
@@ -43,15 +50,52 @@ interface MessageEmailSender : EmailSender
  * or for our different information messages
  */
 @Component
-class GmailSender(private val javaMailSender: JavaMailSender) : PrimaryAuthentEmailSender {
+class GmailSender(private val properties: MixitProperties, private val javaMailSender: JavaMailSender, private val gmailService: Gmail) : PrimaryAuthentEmailSender {
 
     override fun send(email: EmailMessage) {
-        val message = javaMailSender.createMimeMessage()
-        val helper = MimeMessageHelper(message, true, "UTF-8")
-        helper.setTo(email.to)
-        helper.setSubject(email.subject)
+//        val message = javaMailSender.createMimeMessage()
+//
+//        val helper = MimeMessageHelper(message, true, "UTF-8")
+//        helper.setTo(email.to)
+//        helper.setSubject(email.subject)
+//        message.setContent(email.content, MediaType.TEXT_HTML_VALUE)
+//        javaMailSender.send(message)
+
+//        val props = Properties()
+//        val session = Session.getDefaultInstance(props, null)
+//        val message = MimeMessage(session)
+
+        //message.setFrom(InternetAddress("gui.ehret@gmail.com"))
+       // message.addRecipient(javax.mail.Message.RecipientType.TO, InternetAddress(email.to))
+      //  message.setSubject(email.subject)
+      //  message.setContent(email.content, MediaType.TEXT_HTML_VALUE)
+
+//        var mimeBodyPart = MimeBodyPart()
+//
+//
+//        val multipart = MimeMultipart()
+//        multipart.addBodyPart(mimeBodyPart)
+//
+//        message.setContent(multipart)
+
+
+        val session = Session.getDefaultInstance(Properties(), null)
+        val message = MimeMessage(session)
+
+        message.setFrom(InternetAddress("me"))
+        message.addRecipient(javax.mail.Message.RecipientType.TO, InternetAddress(email.to))
+        message.subject = email.subject
         message.setContent(email.content, MediaType.TEXT_HTML_VALUE)
-        javaMailSender.send(message)
+
+        val buffer = ByteArrayOutputStream()
+        message.writeTo(buffer)
+        //val encodedEmail = Base64.getUrlEncoder().encodeToString(buffer.toByteArray())
+        val emailMessage = Message()
+        //emailMessage.setRaw(encodedEmail)
+        emailMessage.encodeRaw(buffer.toByteArray())
+        val result = gmailService.users().messages().send("me", emailMessage).execute();
+
+        System.out.println(result.toPrettyString())
     }
 }
 
