@@ -14,6 +14,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import java.io.File
+
+
 
 
 @SpringBootApplication
@@ -57,8 +60,8 @@ class MixitApplication {
         val jsonConfig = "{\n" +
                 "  \"type\": \"service_account\",\n" +
                 "  \"project_id\": \"mixitconf\",\n" +
-                "  \"private_key_id\": \"1b1b7cb4a84b965a6232f3b08a4a5186227a87ac\",\n" +
-                "  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDRtJB+JNTJ0w2o\\nOi1zL9Bou+gR52OohTv0k7KUF/M8b/QjgbPY80pr0AreB4ajtJJ2PAfNwOPHaxTh\\n5MHsHKT/n97rEFwfPXoyNH5lobbI5Tvgk2psrwVxXFGpezSZD788jBlHq0dlNIm4\\n3bNbnXT2DBi1vbnrUes5MMlEodW1hDxcbhsimjF1tRCqWDUQ1oNrazrg8dZA6C0Z\\nLwMI+CKSvkUp4xuIDKhBaLxugQnmjjBnTULthnQJsNjVi11cDDn3US51iOqDYiIP\\nwjf8+E7FInlRBEPlhG5hjZ18jO77wE7ZhejKOUC6yKNKlVabYpOWpsv1CSaGkZ3w\\nCRXmI6HLAgMBAAECggEASjo1KQllbnjvrRvGqa6DgQb+KpQyUNy0L6q1+7iMhtiD\\n3KuU2tanAYl2x0d3r2uDqikug/RiS9yJ3DmKMMak2ryefarhSMeMgMfW86dtmSeW\\n7bOQaJ78+La6SxjKseECim52pkkosNiLZS3IRkXyOANpHa9l5zcsYSZ1H39/M0vS\\nipnWER4XCuYHJexEWRxUSQIDylmxWaTpKNGJUvTyTqxvWSEtFhwtW6XeTPFpxRFD\\nWji8DkvT1YgQYhQPxmcQOVnZfOb08SNZnRgUhHmGXxXw23Cv4wMXnCXO0XyuUqLh\\n2BhNZp3b6LQAwzFbjAdDj/W8Y4TYdgG/aMnYOGvN/QKBgQDzx00qLDubN99v8bLz\\nx8FLVRQ/bTw84+Q6F4ujh5GnzNXuUDFmy/76+eKmozceQk2a6knUyGmiCnDouhed\\nF188O5jIbJYp+MJZAm4kKmXVKYW3qnkCIdqnVEnTkqE/sr1/NDRzAP0f7gVh26cp\\nH7Dcvc9az0ylNkvSBv7ayMGsZwKBgQDcN/YcJqeCQvcdc9bL8zZdql/eQMp8xY8Z\\npppOQbzw76td7z8ex1neFMBtAAPMJsr6SGZeFQvB+Y51KaqtXVNhTbdGU6H9QNHj\\n2lHFDgmUR6TbdXOIOCfuNCfJPMEgs2i+CHjbhPF6HzSnLK6SKEh89PqvolOVbX4o\\nGK2bwbnA/QKBgCShtj64FtzkMHcp4rIvOiSPzFMbnwmnVQxFrX4NSR3l8d+1vTat\\nQMuF8UEJFac+X1sACcgntXfcCctu6013zZ/HdNXpO0djUhD+BH76wAKgEq/etgBU\\nBf9O8ykPx5tCyKbsuVTuuRqrMbPaxeuwD2ucOiRzMhlBZ3NQCcvmjvPRAoGAOBvi\\nDwYiQ+RABjcPkWNkhLT2PDCR5vyHG2gBhNLnCxRlu0dL89GjKhxrctpAHXH84Yw0\\n2N/P4Rpum5eELyvKJM6iVb7VVSuAzuc/Uk/jTO58KJZiW2DDe8O6J2HdazGLDHAo\\nKvZSeGUfC0EtMXwmDAB3JuzbEwWU0S6IfVj8tRkCgYEAxYkYSNIbumOIZcvZMOs9\\nxDFyVYbCVuyg4SYZLr8xF0D0/dYdcZ/1satxebUv3KLqX3ONSFzn0aIzy33WvCKp\\nwq25iOVIg83wyl4smGBWuWlqFTojWRLVv5R42lQxz61UB1TT7FIDmqRxHAibRKLO\\nLlC5Uy8muga/TnqN26l+YeI=\\n-----END PRIVATE KEY-----\\n\",\n" +
+                "  \"private_key_id\": \"c029bd457bfde81a9f81b5f1023d6c8d9e22cddd\",\n" +
+                "  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCI/pfmUoZ/KGKY\\nyMlpBWNkAf1tYMl7olw6pDRgc42CJDxOylEwNRDWZ6h9c2eJxCv5DyiSqf8/MFL2\\nMn4rpLHmZ9CeelI6aPcredg9iht1WXh7dIDXmBX3B8c21U04jgpBWoSfNrhNES1p\\nqDhtXMh+gPp3VMd2xmkI2JcBh5wHt9R/TW10TiKKxPgbVicGTWRo1ySsaPXTL/zL\\n+Ve1s71U5KlJREHu2tjm4V6SUvWtNHFJsPwW/1r6a69GmoM04sL6IaVXORb3gU9F\\nOuaFtbcEHtJ8B4v9F+WPZL7DfF/F0eqT80r183DOROkOUtB59cU6Lqwd650AY+8R\\nToEQydiZAgMBAAECggEAPVcF68a62zfZggCxklkryi1L7MxAGyA1PLqmiyNiUsnn\\nyP21AalZGy951YY1b43LhK7hY15D4GbCVuN/9Am/8GM+mZ86r1WtiqV5igCLT+2a\\nUWj2gdJiz2QHsskqVO7gr6eYp3OIbVWKKHt+nJVFXsNgosrurwOjJydX4gL2/csN\\n4KN1FmaJin99mEq8kI4Vb+rdPKSuHvXf3PveKQh6dC3sCMOBVr2yyen1o97Wh6TC\\nCpJGCGdebYdLtkahQMqRpHwhW+/ojizaFZbjaGcJvBLiEAWd8+vPwnafLwPGK+hA\\n/r8ZJdskqQtsWw5XxWdk/C/LcTfyu2v5U5kj7ffM2wKBgQC8j+aKqOVTni/v7/LV\\nlrB+cUny6Xn17j2bZVIjVu8h5n2aoMCZ2zJGJC/SwPLUHOPmilOMwn8Gf5Z5M5Fz\\no3kSJMoADP6/EbSJHAZga80rQBRgcZsoJGjIZbLWf8EaQPTBu2zM77DXCtNN7Cxj\\nMJV9/jqGrUi5jFpFfSD8FUko7wKBgQC5/VcAgnRLPFzHcI2MMq76kHHkNJlDPNYX\\nGa8ey/XK+/DoK8HPOBFMuUGkwJ3zLJ1iouMjI02tBAczpOR8Qqrrmg+MROHUiBr/\\n3bVVP7ftGjBVGHDz72uzzkBj0zgWfs0pIjl4LOnXz5hzQ97tSWIkTGVZ+tiwhQV/\\nuZuz5h5G9wKBgGW0pGAEC3XXq/maDfwAxH/e8UkRf9QTxa0MsIoZOPCrFvKRZHFY\\nVryYhicCJbgdQRu3XqtcuREzPmFvXDPoZ8ROjZoLaFh830jZEeNuIgMDFDqU7GBx\\niwcUO6sQy4IyqRHZ2yyK2HKVBzZPff2eVfPYbY745nIWbxZuEJ2HiaeHAoGAXHCj\\nFljAbkhxIJs7bwwd1eGHCdJuvnF1QwP7+wWKg7nW0b411MVcK9MD4lvt5VguXUDy\\nPZulVrHi1nNFMNF93B21TpVJ3PVM3hEWuGk0BD94+EJumX9M+5Auhq8LeHrLg39E\\nKwu/qgi/D8MTAMLxaXMjCKbZnlpvEj1xOufL8p8CgYBDObdq7cF6QbtiYBhtqGq8\\nQXGw4OscgfLqaCmhmttiIP+ywhH3Hb6oTwaPOb+BfJgW7SfA5spKAYwSqh5i/V6B\\naW0GqkchmTfu3xnupmRSn6LqAq6otxjoqCS5QNfjy4UE32SsNFZYAhTpp5/3Ke9M\\n5kuUkg7ByU452heJ8sTvAw==\\n-----END PRIVATE KEY-----\\n\",\n" +
                 "  \"client_email\": \"mixitconf@mixitconf.iam.gserviceaccount.com\",\n" +
                 "  \"client_id\": \"102590735977560341858\",\n" +
                 "  \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n" +
@@ -67,9 +70,14 @@ class MixitApplication {
                 "  \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/mixitconf%40mixitconf.iam.gserviceaccount.com\"\n" +
                 "}"
 
-        return GoogleCredential
+
+
+        val credential = GoogleCredential
                 .fromStream(jsonConfig.byteInputStream())
-                .createScoped(listOf(GmailScopes.GMAIL_SEND))
+                .createScoped(listOf(GmailScopes.MAIL_GOOGLE_COM))
+
+        credential.refreshToken()
+        return credential
 
 //        val clientSecrets = GoogleClientSecrets.load(jacksonFactory(), StringReader(jsonConfig))
 //
@@ -83,7 +91,7 @@ class MixitApplication {
     }
 
     @Bean
-    fun gmailService() = Gmail.Builder(httpTransport(), jacksonFactory(), authorize()).setApplicationName("MiXiT").build()
+    fun gmailService() = Gmail.Builder(httpTransport(), jacksonFactory(), authorize()).setApplicationName("mixitconf").build()
 
 }
 

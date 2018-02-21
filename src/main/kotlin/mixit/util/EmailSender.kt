@@ -82,7 +82,7 @@ class GmailSender(private val properties: MixitProperties, private val javaMailS
         val session = Session.getDefaultInstance(Properties(), null)
         val message = MimeMessage(session)
 
-        message.setFrom(InternetAddress("me"))
+        message.setFrom(InternetAddress("contact@mix-it.fr"))
         message.addRecipient(javax.mail.Message.RecipientType.TO, InternetAddress(email.to))
         message.subject = email.subject
         message.setContent(email.content, MediaType.TEXT_HTML_VALUE)
@@ -93,7 +93,22 @@ class GmailSender(private val properties: MixitProperties, private val javaMailS
         val emailMessage = Message()
         //emailMessage.setRaw(encodedEmail)
         emailMessage.encodeRaw(buffer.toByteArray())
-        val result = gmailService.users().messages().send("me", emailMessage).execute();
+        System.out.println(emailMessage.toPrettyString())
+//
+//        val msg = WebClient.create("https://www.googleapis.com/gmail")
+//                .post()
+//                .uri("/v1/users/contact%40mix-it.fr/messages/send?key=AIzaSyAlXGSgUce0xHA4tw7lPURtFTD_0HQLmss")
+//                .body(BodyInserters.fromFormData("raw", emailMessage.raw))
+//                .accept(MediaType.APPLICATION_JSON)
+//                .retrieve()
+//                .bodyToMono(Message::class.java)
+//                .block()
+
+
+        // POST https://www.googleapis.com/gmail/v1/users/contact%40mix-it.fr/messages/send?key={YOUR_API_KEY}
+
+
+        val result = gmailService.users().messages().send("contact@mix-it.fr", emailMessage).execute();
 
         System.out.println(result.toPrettyString())
     }
